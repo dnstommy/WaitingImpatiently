@@ -1,8 +1,8 @@
 # Site settings
 title: Waiting Impatiently
 description: Six Time Sitecore MVP 2017-2022 Marketing Technologist.
-url: "https://liesto.github.io"
-baseurl: "/waitingimpatiently"
+url: "https://waitingimpatiently.com"
+baseurl: ""
 author:
   name: Chris Auer
   location: Sarasota, Florida
