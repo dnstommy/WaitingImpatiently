@@ -1,0 +1,42 @@
+<header class="site-header">
+    <div class="inner">
+        <div class="site-header-content">
+            <a class="site-logo" href="{{ '/' | relative_url }}">
+                {{ site.title }}
+            </a>
+        </div>
+
+        <nav class="site-nav">
+            <ul class="nav">
+                <li class="nav-home{% if page.url == '/' %} nav-current{% endif %}">
+                    <a href="{{ '/' | relative_url }}">Home</a>
+                </li>
+                <li class="nav-sitecore{% if page.tag == 'sitecore' %} nav-current{% endif %}">
+                    <a href="{{ '/tag/sitecore/' | relative_url }}">Sitecore</a>
+                </li>
+                <li class="nav-xdb{% if page.tag == 'xdb' %} nav-current{% endif %}">
+                    <a href="{{ '/tag/xdb/' | relative_url }}">xDB</a>
+                </li>
+                <li class="nav-salesforce{% if page.tag == 'salesforce' %} nav-current{% endif %}">
+                    <a href="{{ '/tag/salesforce/' | relative_url }}">Salesforce</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="site-header-bg" {% if page.layout == 'home' or page.layout == 'tag' %}style="background-image: url('{{ '/assets/images/hero.jpg' | relative_url }}')"{% endif %}>
+    <div class="inner">
+        {% if page.layout == 'home' %}
+        <div class="site-header-content">
+            <h1 class="site-title">{{ site.title }}</h1>
+            <p class="site-description">{{ site.description }}</p>
+        </div>
+        {% elsif page.layout == 'tag' %}
+        <div class="site-header-content">
+            <h1 class="site-title">{{ page.title }}</h1>
+            <p class="site-description">A collection of {{ page.post_count | default: '' }} posts</p>
+        </div>
+        {% endif %}
+    </div>
+</div>

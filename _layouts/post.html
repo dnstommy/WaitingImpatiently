@@ -1,0 +1,73 @@
+---
+layout: default
+---
+<main class="site-main">
+    <article class="post-full post">
+        <header class="post-full-header">
+            {% if page.tags.size > 0 %}
+            <div class="post-tags">
+                {% for tag in page.tags %}
+                <a href="{{ '/tag/' | append: tag | downcase | relative_url }}/" class="post-tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <h1 class="post-full-title">{{ page.title }}</h1>
+            <div class="post-meta">
+                <span class="post-meta-author">{{ page.author | default: site.author.name }}</span>
+                <time class="post-meta-date" datetime="{{ page.date | date_to_xmlschema }}">
+                    {{ page.date | date: "%d %b %Y" }}
+                </time>
+                {% if page.reading_time %}
+                <span class="post-meta-reading-time">{{ page.reading_time }} min read</span>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if page.image %}
+        <figure class="post-full-image">
+            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+        </figure>
+        {% endif %}
+
+        <section class="post-full-content">
+            <div class="post-content">
+                {{ content }}
+            </div>
+        </section>
+    </article>
+</main>
+
+<aside class="read-next">
+    <div class="inner">
+        <div class="read-next-feed">
+            {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+            {% assign current_index = -1 %}
+            {% for post in sorted_posts %}
+                {% if post.url == page.url %}
+                    {% assign current_index = forloop.index0 %}
+                {% endif %}
+            {% endfor %}
+
+            {% if current_index > 0 %}
+            {% assign prev_post = sorted_posts[current_index | minus: 1] %}
+            <article class="read-next-card">
+                <header class="read-next-card-header">
+                    <span class="read-next-card-label">Previous</span>
+                    <h3 class="read-next-card-title"><a href="{{ prev_post.url | relative_url }}">{{ prev_post.title }}</a></h3>
+                </header>
+            </article>
+            {% endif %}
+
+            {% assign next_index = current_index | plus: 1 %}
+            {% if next_index < sorted_posts.size %}
+            {% assign next_post = sorted_posts[next_index] %}
+            <article class="read-next-card">
+                <header class="read-next-card-header">
+                    <span class="read-next-card-label">Next</span>
+                    <h3 class="read-next-card-title"><a href="{{ next_post.url | relative_url }}">{{ next_post.title }}</a></h3>
+                </header>
+            </article>
+            {% endif %}
+        </div>
+    </div>
+</aside>

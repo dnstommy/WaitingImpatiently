@@ -1,0 +1,50 @@
+# Site settings
+title: Waiting Impatiently
+description: Six Time Sitecore MVP 2017-2022 Marketing Technologist.
+url: ""
+baseurl: ""
+author:
+  name: Chris Auer
+  location: Sarasota, Florida
+  twitter: ChristopherAuer
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:slug/
+
+# Pagination
+paginate: 25
+paginate_path: "/page/:num/"
+
+# Collections for tags
+collections:
+  tags:
+    output: true
+    permalink: /tag/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Chris Auer"
+  - scope:
+      path: ""
+      type: "tags"
+    values:
+      layout: "tag"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-feed
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
