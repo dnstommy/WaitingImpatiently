@@ -36,7 +36,7 @@ Without this, the SOQL query below will return a `INSUFFICIENT_ACCESS` error.
 Open the **Developer Console** or use **Workbench** and run:
 
 ```sql
-SELECT User.Username, User.Profile.Name,
+SELECT User.Username,
        HasBuiltInAuthenticator, HasSecurityKey, HasU2F,
        HasSalesforceAuthenticator, HasTotp
 FROM TwoFactorMethodsInfo
@@ -50,31 +50,30 @@ This gives you a row per active user who has registered at least one verificatio
 Narrow the results to users who have no phishing-resistant method registered:
 
 ```sql
-SELECT User.Username, User.Profile.Name,
+SELECT User.Username,
        HasBuiltInAuthenticator, HasSecurityKey, HasU2F,
        HasSalesforceAuthenticator, HasTotp
 FROM TwoFactorMethodsInfo
 WHERE User.IsActive = true
   AND HasBuiltInAuthenticator = false
   AND HasSecurityKey = false
-ORDER BY User.Profile.Name
+ORDER BY User.Username
 ```
 
 Anyone returned here would hit the step-up wall after July enforcement. Tighten the scope to the highest-risk profiles:
 
 ```sql
-SELECT User.Username, User.Profile.Name,
+SELECT User.Username,
        HasBuiltInAuthenticator, HasSecurityKey, HasU2F,
        HasSalesforceAuthenticator, HasTotp
 FROM TwoFactorMethodsInfo
 WHERE User.IsActive = true
   AND HasBuiltInAuthenticator = false
   AND HasSecurityKey = false
-  AND User.Profile.Name = 'System Administrator'
 ORDER BY User.Username
 ```
 
-Repeat for any profiles or permission sets granting Modify All Data or Manage Users — those users carry the same risk as sysadmins.
+To focus on admins specifically, cross-reference the results against a User query filtered by `Profile.Name = 'System Administrator'`. Do the same for any profiles or permission sets granting Modify All Data or Manage Users — those users carry the same risk as sysadmins.
 
 ## Two caveats you need to know
 
