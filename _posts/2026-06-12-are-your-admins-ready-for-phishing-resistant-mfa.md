@@ -69,6 +69,7 @@ FROM TwoFactorMethodsInfo
 WHERE User.IsActive = true
   AND HasBuiltInAuthenticator = false
   AND HasSecurityKey = false
+  AND User.Profile.Name = 'System Administrator'
 ```
 
 To focus on admins specifically, cross-reference the results against a User query filtered by `Profile.Name = 'System Administrator'`. Do the same for any profiles or permission sets granting Modify All Data or Manage Users — those users carry the same risk as sysadmins.
